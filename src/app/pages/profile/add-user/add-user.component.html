@@ -1,0 +1,165 @@
+<div class="inner-page">
+  <div class="header">
+    header
+  </div>
+  <div class="content">
+    <div class="head">
+        <div class="title "><h2>{{title}}</h2></div>
+        <div class="btns">
+          <button class="btn cancel-btn" type="button" [routerLink]="['/users']">Cancel</button>
+          <button class="btn save-btn" type="submit" form="profileForm" (click)="addUser(profileForm.form)"  >Save Changes</button>
+        </div>
+    </div>
+    <div class="form">
+      <form #profileForm="ngForm" id="profileForm">
+        <!-- User Type -->
+        <div class="row">
+          <h3 class="line-break col-sm-12"><span>{{'user type' |uppercase }}</span> </h3>
+          <div class="item col-sm-4 ">
+              <label for="userType" class="form-label">Select Type</label>
+              <mat-form-field class="w-100" >
+                <mat-select [(ngModel)]="user.userType" id="userType" (valueChange)="onChangeType($event)" name="userType" #userType="ngModel" required>
+                  <mat-option [value]="0">Admin</mat-option>
+                  <mat-option [value]="1">Customer</mat-option>
+                </mat-select>
+                <mat-error *ngIf="userType.hasError('required')">
+                  field required
+              </mat-error>
+              </mat-form-field>
+          </div>
+          <div class="item col-sm-4 " *ngIf="user.userType == 0" >
+            <label for="customersIds" class="form-label">Select Customer</label>
+            <mat-form-field class="w-100" >
+              <mat-select [(ngModel)]="user.customersIds" name="customersIds" #customersIds="ngModel" multiple>
+                <mat-option *ngFor="let customer of customers"  [value]="customer.id">{{customer.firstName + ' ' + customer.lastName |uppercase}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="item active col-sm-4" *ngIf="user.userType == 0" >
+            <span class=" form-label isActive">Is Admin Active?</span><mat-slide-toggle [(ngModel)]="user.isActive" name="isActive" #isActive="ngModel"></mat-slide-toggle>
+          </div>
+        </div>
+
+        <!-- Generals -->
+        <div class="row">
+          <h3 class="line-break col-sm-12"><span>{{'generals' |uppercase }}</span> </h3>
+          <div class="item col-sm-4 ">
+              <label for="firstName" class="form-label">First Name </label>
+              <mat-form-field class="w-100">
+              <input matInput   placeholder="First Name" id="firstName" name="firstName" [(ngModel)]="user.firstName"
+              #firstName="ngModel" required minlength="3">
+              <mat-error class="text-danger"  *ngIf="firstName.hasError('required')">
+                  field required
+              </mat-error>
+              <mat-error  class="text-danger" *ngIf="firstName.hasError('minlength')">
+                  field must be at least 3 characters
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="item col-sm-4 ">
+            <label for="middleName" class="form-label">Middle Name </label>
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Middle Name" id="middleName" name="middleName" [(ngModel)]="user.middleName"
+              #middleName="ngModel" minlength="3">
+              <mat-error  class="text-danger" *ngIf="middleName.hasError('minlength')">
+                  field must be at least 3 characters
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="item col-sm-4 ">
+            <label for="lastName" class="form-label">Last Name </label>
+            <mat-form-field class="w-100">
+              <input matInput  placeholder="Last Name" id="lastName" name="lastName" [(ngModel)]="user.lastName"
+              #lastName="ngModel" minlength="3">
+              <mat-error  class="text-danger" *ngIf="lastName.hasError('minlength')">
+                  field must be at least 3 characters
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+
+        </div>
+        <div class="row"  *ngIf="user.userType == 0" >
+          <div class="item col-sm-4 ">
+            <label for="username" class="form-label">Username </label>
+            <mat-form-field class="w-100">
+              <input matInput  id="username" name="username" [(ngModel)]="user.username"
+              #username="ngModel" minlength="3">
+              <mat-error  class="text-danger" *ngIf="username.hasError('minlength')">
+                  field must be at least 3 characters
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="item col-sm-4 ">
+            <label for="password" class="form-label">Password </label>
+            <mat-form-field class="w-100">
+              <input matInput [type]="hide ? 'password' : 'text'"   id="password" name="password" [(ngModel)]="user.password"
+              #password="ngModel" minlength="4" type="password">
+              <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error  class="text-danger" *ngIf="password.hasError('minlength')">
+                  field must be at least 4 characters
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="item col-sm-4 ">
+            <label for="repassword" class="form-label">Re-Type Password </label>
+            <mat-form-field class="w-100">
+              <input matInput [type]="hideRetype ? 'password' : 'text'" id="repassword" name="repassword" [(ngModel)]="retypePassword"
+              #repassword="ngModel" type="password" ngValidateEqual="password">
+              <button mat-icon-button type="button" matSuffix (click)="hideRetype = !hideRetype" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideRetype">
+                <mat-icon>{{hideRetype ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error  class="text-danger" *ngIf="repassword.hasError('notEqual') && password.value != repassword.value">
+                  Passwords Don't Match
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="row">
+          <h3 class="line-break col-sm-12"><span>{{'contact' |uppercase }}</span> </h3>
+          <div class=" item col-sm-4 mb-3">
+            <label for="phone" class="form-label">MobilePhone </label>
+            <div class="input-group mb-3 w-100">
+              <span class="input-group-text" id="phone-icon"><i class="fa fa-phone"></i></span>
+              <input type="tel" class="form-control" placeholder="01-------" id="phone" name="phone" [(ngModel)]="user.phoneNumber"
+              #phone="ngModel" minlength="11" maxlength="11" aria-label="phone" aria-describedby="phone-icon" (keydown)="checkInput($event,'phone')">
+              <div  class="text-danger" *ngIf="phone.hasError('minlength')">
+                field must be at least 11 digits
+              </div>
+            </div>
+          </div>
+
+          <div class="item col-sm-4 mb-3">
+            <label for="whatsapp" class="form-label">Whatsapp </label>
+            <div class="input-group mb-3 w-100">
+              <span class="input-group-text" id="whatsapp-icon"><i class="fa fa-whatsapp"></i></span>
+              <input type="tel" class="form-control" placeholder="01--------" name="whatsapp" id="whatsapp" [(ngModel)]="user.whatsappNumber"
+              #whatsapp="ngModel" aria-describedby="whatsapp-icon" minlength="11" maxlength="11" >
+              <div  class="text-danger" *ngIf="whatsapp.hasError('minlength')">
+                field must be at least 11 digits
+              </div>
+            </div>
+          </div>
+          <div class="item col-sm-4 mb-3">
+            <label for="email" class="form-label">Email </label>
+            <div class="input-group mb-3 w-100">
+              <span class="input-group-text" id="mail-icon"><i class="fa fa-envelope"></i></span>
+              <input type="email" class="form-control"  placeholder="name@example.com" id="email" name="email" [(ngModel)]="user.email"
+              #email="ngModel" aria-describedby="mail-icon">
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</div>

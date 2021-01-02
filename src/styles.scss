@@ -1,1 +1,168 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 /* You can add global styles to this file, and also import other style files */
+*,
+body {
+  box-sizing: border-box;
+}
+body {
+  background-color: #eee;
+  .page {
+    min-height: 500px;
+    padding: 20px;
+    .inner-page {
+      .header {
+        margin: 15px 20px;
+      }
+      .content {
+        background-color: white;
+        border-radius: 15px;
+        padding: 20px;
+        min-height: 400px;
+      }
+    }
+    .head {
+      display: flex;
+      flex-direction: row;
+      .btns,
+      .title {
+        flex: 50%;
+        margin: 0 20px;
+        font-size: 24px;
+      }
+      .btns {
+        display: flex;
+        justify-content: flex-end;
+        .btn {
+          margin: 0 10px;
+          padding: 10px;
+          border-radius: 25px;
+          min-width: 90px;
+          font-size: 15px;
+          &:active,
+          &:visited {
+            box-shadow: unset;
+            outline: none !important;
+          }
+        }
+        .cancel-btn {
+          color: #a7a2a2;
+        }
+        .save-btn {
+          padding: 0 20px;
+          color: white;
+          background-color: #6012a9;
+        }
+      }
+    }
+    .form {
+      margin: 35px 0;
+      min-height: 300px;
+      .line-break {
+        border-top: 1px solid #eee;
+        position: relative;
+        margin: 40px 0;
+        span {
+          background-color: white;
+          padding: 0px 20px;
+          text-align: Center;
+          position: absolute;
+          top: -15px;
+        }
+      }
+      .item {
+        padding-left: 35px;
+        margin-top: 15px;
+      }
+      .form-label {
+        font-weight: 500;
+        color: #8a8989;
+      }
+      .form-control {
+        border: none;
+        border-bottom: 1px solid gray;
+        box-shadow: none;
+        border-radius: unset;
+      }
+      ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #ddd;
+        opacity: 1; /* Firefox */
+        font-size: 15px;
+      }
+
+      :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: #ddd;
+        font-size: 15px;
+      }
+
+      ::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: #ddd;
+        font-size: 15px;
+      }
+      .input-group {
+        .input-group-text {
+          position: absolute;
+          top: 6px;
+          color: #6012a9;
+          z-index: 2;
+          font-size: 22px;
+        }
+        input {
+          z-index: 1;
+          margin-left: 10px;
+        }
+      }
+      .isActive {
+        margin-right: 30px;
+      }
+      .active {
+        margin-top: 35px;
+      }
+    }
+  }
+}
+
+// Common
+.w-100 {
+  width: 100%;
+}
+
+// re-style [Customize Material]
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: gray;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #6012a9;
+}
+
+.mat-header-cell {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+}
+td.mat-cell {
+  border-bottom-style: none;
+}
+.mat-paginator {
+  background: unset;
+  margin-top: 20px;
+}
+.mat-paginator-page-size {
+  display: flex;
+  align-items: baseline;
+  margin-right: 8px;
+  flex: 50%;
+  margin-left: 5%;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 20px;
+}
